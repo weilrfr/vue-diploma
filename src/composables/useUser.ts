@@ -1,72 +1,91 @@
-import { collection, getDocs, addDoc } from 'firebase/firestore'
-import { db, storage } from '@/firebase'
-import { getStorage, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { collection, getDocs, addDoc, type DocumentData } from 'firebase/firestore'
+import { db } from '@/firebase'
 import { ref, computed } from 'vue'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
-export const useUser = () => {
-    const user = ref('');
+const user = ref()
+const userList = ref([] as DocumentData)
 
-    const loading = ref({
-        user: false
-    })
+const loading = ref({
+  user: false,
+  userList: false
+})
 
-    const auth = getAuth()
-
-    const userRemake = computed(() => {
-        if (user.value) {
-          console.log(user.value)
-          return {
-            displayName: user.value.displayName,
-            email: user.value.email,
-            photoURL: user.value.photoURL,
-            uid: user.value.uid
-          }
-        }
-        return null
-    })
-
-    function googleRegister() {
-        const provider = new GoogleAuthProvider()
-
-        signInWithPopup(auth, provider)
-            .then(async (userCredential) => {
-                if (userCredential.user) {
-                    user.value = userCredential.user
-                }
-                await addUserToMainDatabase()
-                localStorage.setItem('user', JSON.stringify(user.value))
-                // location.reload()
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+const userRemake = computed(() => {
+  if (user.value) {
+    return {
+      displayName: user.value.displayName,
+      email: user.value.email,
+      photoURL: user.value.photoURL,
+      uid: user.value.uid
     }
+  }
+  return null
+})
+export const useUser = () => {
 
-    async function addUserToMainDatabase() {
-        loading.value.user = true
-        try {
-          if (userRemake.value) {
-            await addDoc(collection(db, 'users'), userRemake.value)
-          }
-          // if (res) {
-          //   localStorage.setItem('user', JSON.stringify(user.value))
-          // }
-          loading.value.user = false
-        } catch (error) {
-          console.error(error)
+  const auth = getAuth()
+
+
+  function googleRegister() {
+    const provider = new GoogleAuthProvider()
+
+    signInWithPopup(auth, provider)
+      .then(async (userCredential) => {
+        user.value = userCredential.user
+        await addUserToMainDatabase()
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  async function addUserToMainDatabase() {
+    loading.value.user = true
+    try {
+      if (userRemake.value) {
+        await getAllUsers()
+        if (!checkUserInDatabase()) {
+          await addDoc(collection(db, 'users'), userRemake.value)
+        } else {
+          console.error('User already in database')
         }
       }
-
-    const googleLogout = () => {
-        localStorage.removeItem('user')
-        // location.reload()
+      loading.value.user = false
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    return {
-        user,
-        loading,
-        googleRegister,
-        googleLogout,
+  async function getAllUsers() {
+    loading.value.userList = true
+    try {
+      const querySnapshot = await getDocs(collection(db, 'users'))
+      querySnapshot.forEach((doc) => {
+        userList.value.push(doc.data())
+      })
+      loading.value.userList = false
+    } catch (error) {
+      console.error(error)
     }
+  }
+
+  function checkUserInDatabase() {
+    return userList.value.some((item: any) => item.uid === userRemake.value?.uid)
+  }
+
+  function googleLogout() {
+    auth.signOut();
+    user.value = null;
+  }
+
+  return {
+    user,
+    loading,
+    googleRegister,
+    googleLogout,
+    userRemake,
+    userList,
+    getAllUsers,
+  }
 }
