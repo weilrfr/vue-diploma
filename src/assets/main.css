@@ -3,3 +3,8 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+
+.rg-btn-container-foreground {
+    box-shadow: 0 0 5px 0 #222222;
+}

@@ -3,29 +3,34 @@ import Button from 'primevue/button'
 import { useUser } from '../composables/useUser'
 import Avatar from 'primevue/avatar';
 
-const { user, googleRegister, googleLogout } = useUser()
+const { user, googleLogout, googleRegister } = useUser()
 </script>
 
 <template>
   <div class="side">
-    <!-- <div v-if="!user">
-      <span class="p-inputgroup-addon">
-        <i class="pi pi-user"></i>
-      </span>
-      <Button label="Войти" @click="googleRegister">Войти<i class="pi pi-sign-in"></i></Button>
-    </div> -->
-
-    <div class="profile">
-      <div class="avatar">
-        <Avatar image="https://avatars.githubusercontent.com/u/132679772?v=4" class="mr-2" size="xlarge" shape="circle" />
+    <div class="cont">
+      <div v-if="!user">
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-user"></i>
+        </span>
+        <Button label="Войти" @click="googleRegister">Войти</Button>
       </div>
-      <p>{{ user.value.name }}</p>
-      <Button label="Выйти" @click="googleLogout">Выйти <i class="pi pi-sign-out"></i></Button>
+      <div v-else class="profile">
+        <div class="avatar">
+          <Avatar :image="user.photoURL" class="mr-2" size="xlarge" shape="circle" style='width: 9rem; height: 9rem'/>
+        </div>
+        <p>{{ user.displayName }}</p>
+        <Button label="Выйти" @click="googleLogout">Выйти</Button>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.cont {
+  margin: 0 auto;
+  width: 80%;
+}
 .side {
   display: flex;
   justify-content: center;
@@ -36,14 +41,27 @@ const { user, googleRegister, googleLogout } = useUser()
   justify-content: center;
   flex-wrap: wrap;
   flex-basis: 100%;
+  font-size: 2rem;
+  margin-top: 100px;
 }
 .avatar {
   display: flex;
   justify-content: center;
+}
+
+.profile p {
+  text-align: center;
+}
+
+.profile > * {
   flex-basis: 100%;
+  margin: 10px 0px;
 }
 
 .profile Button {
   padding: 15px;
+  justify-content: center;
+  border-radius: 20px;
 }
+
 </style>

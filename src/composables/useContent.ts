@@ -56,7 +56,7 @@ export const useContent = () => {
     } catch (error) {
       console.error(error)
     }
-  }
+  } 
 
   async function deleteContent(id: string) {
     try {

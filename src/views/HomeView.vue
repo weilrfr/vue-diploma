@@ -1,9 +1,9 @@
 <script setup lang="ts">
-
+import NavBar from '../components/layouts/NavBar.vue';
 </script>
 
 <template>
     <div>
-        <h1>Home</h1>
+        <NavBar/>
     </div>
 </template>
