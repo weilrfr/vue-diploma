@@ -24,7 +24,7 @@ const cities = ref([
   <div class="icons">
     <i class="pi pi-ellipsis-v" @click="toggleVisible"></i>
     <div class="listbox" >
-      <Listbox v-model="selectedCity" v-model:visible="visible" :options="cities" optionLabel="name" class="w-full md:w-14rem" />
+      <Listbox v-if="visible" v-model="selectedCity" v-model:visible="visible" :options="cities" optionLabel="name" class="w-full md:w-14rem" />
     </div>
   </div>
 </div>
@@ -39,8 +39,8 @@ const cities = ref([
 
 .listbox {
   position: absolute;
-  top: 10%;
-  left: 60%;
+  top: 7%;
+  right: 35px;
 }
 .listbox > *{
   padding: 10px;
