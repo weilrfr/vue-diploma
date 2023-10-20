@@ -13,9 +13,12 @@ import PrimeVue from 'primevue/config';
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css';
 
+import ToastService from 'primevue/toastservice';
+
 
 const app = createApp(App)
 
+app.use(ToastService);
 app.use(bottomNavigationVue as any)
 app.use(router);
 app.use(PrimeVue);

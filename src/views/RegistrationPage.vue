@@ -9,7 +9,7 @@ const { user, googleLogout, googleRegister } = useUser()
 <template>
   <div class="side">
     <div class="cont">
-      <div v-if="!user">
+      <div v-if="!user" class="registerform">
         <span class="p-inputgroup-addon">
           <i class="pi pi-user"></i>
         </span>
@@ -27,6 +27,16 @@ const { user, googleLogout, googleRegister } = useUser()
 </template>
 
 <style scoped>
+
+.registerform {
+  display: flex;
+  justify-content: center;
+}
+
+.registerform Button {
+  padding: 3px 5px;
+}
+
 .cont {
   margin: 0 auto;
   width: 80%;

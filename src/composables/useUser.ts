@@ -79,6 +79,26 @@ export const useUser = () => {
     user.value = null;
   }
 
+
+  function addToLocalStorage() {
+    if (user.value) {
+      localStorage.setItem('user', JSON.stringify(user.value))
+    }
+  }
+
+  function getUserFromLocalStorage() {
+    const userFromLocalStorage = localStorage.getItem('user')
+    if (userFromLocalStorage) {
+      user.value = JSON.parse(userFromLocalStorage)
+    }
+  }
+
+  function removeFromLocalStorage() {
+    localStorage.removeItem('user')
+  }
+
+
+
   return {
     user,
     loading,
@@ -87,5 +107,9 @@ export const useUser = () => {
     userRemake,
     userList,
     getAllUsers,
+    getUserFromLocalStorage,
+    addToLocalStorage,
+    removeFromLocalStorage
   }
 }
+
