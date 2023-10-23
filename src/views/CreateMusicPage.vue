@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useField, useForm } from 'vee-validate'
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import { ref } from 'vue'
@@ -8,53 +7,39 @@ import FileUpload from 'primevue/fileupload';
 
 const { user } = useUser();
 
-const { handleSubmit, resetForm } = useForm()
-const { value, errorMessage } = useField('value', validateField)
 const songName = ref('');
-const authorName = ref(user.value.displayName);
+const authorName = ref('');
+const genre = ref('');
 
-
-function validateField(value: string) {
-  if (!value) {
-    return 'Это поле обязательно'
-  }
-
-  return true
+if (user) {
+  authorName.value = user.value.displayName;
 }
 
-const onSubmit = handleSubmit((values) => {
-  if (values.value && values.value.length > 0) {
-    resetForm()
-  }
-})
 </script>
 
 <template>
   <div class="card flex justify-content-center inputs-group">
-    <form @submit="onSubmit" class="flex flex-column gap-2">
+    <form class="flex flex-column gap-2">
 
       <div>
         <span class="p-float-label">
-          <InputText id="songName" v-model="songName" type="text" :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error"/>
+          <InputText id="songName" v-model="songName" type="text" aria-describedby="text-error"/>
           <label for="songName">Название трека</label>
         </span>
-        <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
       </div>
 
       <div>
         <span class="p-float-label">
-          <InputText id="author" v-model="authorName" type="text" :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error" disabled/>
+          <InputText id="author" v-model="authorName" type="text" aria-describedby="text-error" disabled/>
           <label for="author">Имя</label>
         </span>
-        <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
       </div>
 
       <div>
         <span class="p-float-label">
-          <InputText id="genre" v-model="value" type="text" :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error"/>
+          <InputText id="genre" v-model="genre" type="text" aria-describedby="text-error"/>
           <label for="genre">Жанр</label>
         </span>
-        <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
       </div>
 
       <FileUpload mode="basic" name="images" accept=".jpg, .png"/>

@@ -5,7 +5,7 @@ let selected = ref();
 let options = ref([
   { id: 1, icon: 'pi pi-home', title: 'Home', titleColor: '#669C35', path: { name: "home" }},
   { id: 2, icon: 'pi pi-search', title: 'Search', titleColor: '#669C35'},
-  { id: 3, icon: 'pi pi-user', title: 'Account', titleColor: '#669C35', path: { name: "reg" }},
+  { id: 3, icon: 'pi pi-user', title: 'Account', titleColor: '#669C35', path: { name: "registration" }},
 ])
 </script>
 

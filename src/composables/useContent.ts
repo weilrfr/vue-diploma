@@ -2,16 +2,19 @@ import { collection, getDocs, addDoc, deleteDoc, doc, type DocumentData } from '
 import { db } from '@/firebase'
 import { ref } from 'vue'
 import { useUser } from './useUser';
+import { createId } from '@/services/methods';
 
 export const useContent = () => {
 
   const content = ref()
   const contentList = ref([] as DocumentData)
   const newContent = ref({
+    id: createId(),
     author: '',
     songName: '',
     genre: '',
-    image: ''
+    image: '',
+    file: '',
   })
 
   const loading = ref({

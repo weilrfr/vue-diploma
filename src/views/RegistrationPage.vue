@@ -9,12 +9,11 @@ const { user, googleLogout, googleRegister } = useUser()
 <template>
   <div class="side">
     <div class="cont">
+
       <div v-if="!user" class="registerform">
-        <span class="p-inputgroup-addon">
-          <i class="pi pi-user"></i>
-        </span>
         <Button label="Войти" @click="googleRegister">Войти</Button>
       </div>
+
       <div v-else class="profile">
         <div class="avatar">
           <Avatar :image="user.photoURL" class="mr-2" size="xlarge" shape="circle" style='width: 9rem; height: 9rem'/>
@@ -31,10 +30,13 @@ const { user, googleLogout, googleRegister } = useUser()
 .registerform {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .registerform Button {
   padding: 3px 5px;
+  flex-basis: 100%;
+  justify-content: center;
 }
 
 .cont {
