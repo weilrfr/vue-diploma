@@ -8,7 +8,10 @@ export const useContent = () => {
   const content = ref()
   const contentList = ref([] as DocumentData)
   const newContent = ref({
-    author: ''
+    author: '',
+    songName: '',
+    genre: '',
+    image: ''
   })
 
   const loading = ref({
