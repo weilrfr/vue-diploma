@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
-import { ref } from 'vue'
 import { useUser } from '../composables/useUser'
 import FileUpload from 'primevue/fileupload';
+import { useContent } from '@/composables/useContent';
 
 const { user } = useUser();
-
-const songName = ref('');
-const authorName = ref('');
-const genre = ref('');
+const { onUpload, addContent, newContent } = useContent();
 
 if (user) {
-  authorName.value = user.value.displayName;
+  newContent.value.author = user.value.displayName;
 }
 
 </script>
@@ -23,27 +20,28 @@ if (user) {
 
       <div>
         <span class="p-float-label">
-          <InputText id="songName" v-model="songName" type="text" aria-describedby="text-error"/>
+          <InputText id="songName" v-model="newContent.songName" type="text" aria-describedby="text-error"/>
           <label for="songName">Название трека</label>
         </span>
       </div>
 
       <div>
         <span class="p-float-label">
-          <InputText id="author" v-model="authorName" type="text" aria-describedby="text-error" disabled/>
+          <InputText id="author" v-model="newContent.author" type="text" aria-describedby="text-error" disabled/>
           <label for="author">Имя</label>
         </span>
       </div>
 
       <div>
         <span class="p-float-label">
-          <InputText id="genre" v-model="genre" type="text" aria-describedby="text-error"/>
+          <InputText id="genre" v-model="newContent.genre" type="text" aria-describedby="text-error"/>
           <label for="genre">Жанр</label>
         </span>
       </div>
 
-      <FileUpload mode="basic" name="images" accept=".jpg, .png"/>
-      <Button type="submit" label="Submit" />
+      <FileUpload mode="basic" name="images" accept=".jpg, .png" chooseLabel="Нажмите что бы загрузить картинку" @input="onUpload($event)"/>
+      <FileUpload mode="basic" name="songs" accept=".mp3" chooseLabel="Нажмите что бы загрузить трек" @input="onUpload($event)"/>
+      <Button label="Submit" @click="addContent"/>
     </form>
   </div>
 </template>
@@ -60,6 +58,7 @@ if (user) {
 
 :deep(.p-inputtext) {
   padding: 5px 0px;
+  width: 100%;
 }
 
 :deep(.p-fileupload) {

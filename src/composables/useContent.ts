@@ -1,11 +1,12 @@
 import { collection, getDocs, addDoc, deleteDoc, doc, type DocumentData } from 'firebase/firestore'
 import { db } from '@/firebase'
+import { getStorage } from 'firebase/storage'
+import * as firebase from 'firebase/storage';
 import { ref } from 'vue'
-import { useUser } from './useUser';
-import { createId } from '@/services/methods';
+import { useUser } from './useUser'
+import { createId } from '@/services/methods'
 
 export const useContent = () => {
-
   const content = ref()
   const contentList = ref([] as DocumentData)
   const newContent = ref({
@@ -14,7 +15,7 @@ export const useContent = () => {
     songName: '',
     genre: '',
     image: '',
-    file: '',
+    song: '',
   })
 
   const loading = ref({
@@ -36,12 +37,59 @@ export const useContent = () => {
     }
   }
 
+  async function uploadImage(file: any) {
+    loading.value.newContent = true
+    const storage = getStorage()
+    const storageRef = firebase.ref(storage, `songs/${file.name}`)
+    await firebase.uploadBytes(storageRef, file)
+      .then(() => {
+        console.log('File uploaded successfully')
+
+        firebase.getDownloadURL(storageRef).then((url) => {
+          console.log('URL uploaded successfully')
+          newContent.value.image = url;
+        })
+        .catch((error) => {
+          console.log('Error: ', error)
+        })
+    })
+    loading.value.newContent = false
+  }
+
+  async function uploadSong(file: any) {
+    loading.value.newContent = true
+    const storage = getStorage()
+    const storageRef = firebase.ref(storage, `songs/${file.name}`)
+    await firebase.uploadBytes(storageRef, file)
+      .then(() => {
+        console.log('File uploaded successfully')
+
+        firebase.getDownloadURL(storageRef).then((url) => {
+          console.log('URL uploaded successfully')
+          newContent.value.song = url;
+        })
+        .catch((error) => {
+          console.log('Error: ', error)
+        })
+    })
+    loading.value.newContent = false
+  }
+
+  async function onUpload(e: any) {
+    const file = e.target.files[0]
+    if (e.accept == '.jpg, .png') {
+      await uploadImage(file)
+    } else {
+      await uploadSong(file);
+    }
+  }
+  
   async function addContent() {
-    const { userRemake } = useUser();
+    const { user } = useUser()
     loading.value.newContent = true
     try {
-      if (newContent.value && userRemake.value) {
-        const {user} = useUser()
+      if (newContent.value && user.value) {
+        const { user } = useUser()
         newContent.value.author = user.value
         await addDoc(collection(db, 'contents'), newContent.value)
         loading.value.newContent = false
@@ -62,7 +110,7 @@ export const useContent = () => {
     } catch (error) {
       console.error(error)
     }
-  } 
+  }
 
   async function deleteContent(id: string) {
     try {
@@ -74,14 +122,16 @@ export const useContent = () => {
     }
   }
 
-
   return {
     content,
     contentList,
+    newContent,
     loading,
     getAllContent,
     deleteContent,
     addContent,
     getContentById,
+    onUpload,
+    uploadSong,
   }
 }

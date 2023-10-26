@@ -154,6 +154,7 @@ export const useUser = () => {
       await updateUserInDatabase()
     }
   })
+  
 
   return {
     user,
