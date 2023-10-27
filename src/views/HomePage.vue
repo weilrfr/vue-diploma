@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import NavBar from '../components/layouts/NavBar.vue';
-import CardItem from '../components/CardItem.vue';
+import CardList from '../components/CardList.vue';
 </script>
 
 <template>
     <div>
         <NavBar/>
-        <!-- <CardItem/> -->
+        <CardList/>
     </div>
 </template>

@@ -40,10 +40,10 @@ export const useContent = () => {
   async function uploadImage(file: any) {
     loading.value.newContent = true
     const storage = getStorage()
-    const storageRef = firebase.ref(storage, `songs/${file.name}`)
+    const storageRef = firebase.ref(storage, `images/${file.name}`)
     await firebase.uploadBytes(storageRef, file)
       .then(() => {
-        console.log('File uploaded successfully')
+        console.log('Image uploaded successfully')
 
         firebase.getDownloadURL(storageRef).then((url) => {
           console.log('URL uploaded successfully')
@@ -62,7 +62,7 @@ export const useContent = () => {
     const storageRef = firebase.ref(storage, `songs/${file.name}`)
     await firebase.uploadBytes(storageRef, file)
       .then(() => {
-        console.log('File uploaded successfully')
+        console.log('Song uploaded successfully')
 
         firebase.getDownloadURL(storageRef).then((url) => {
           console.log('URL uploaded successfully')
@@ -77,7 +77,7 @@ export const useContent = () => {
 
   async function onUpload(e: any) {
     const file = e.target.files[0]
-    if (e.accept == '.jpg, .png') {
+    if (e.target.accept == '.jpg, .png') {
       await uploadImage(file)
     } else {
       await uploadSong(file);

@@ -25,7 +25,6 @@ const cities = ref<ListBoxValue[]>([
 ])
 
 function fff(e: any) {
-  console.log(e)
   if (e.value && e.value.route !== undefined) {
     router.push(e.value?.route as string)
   }

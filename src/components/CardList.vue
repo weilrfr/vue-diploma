@@ -19,9 +19,9 @@ onMounted(async () => {
 
 <template>
   <section class="songs-list">
-    <div class="songs" v-for="song in contentList" :key="song" :loading="loading.contentList">
-      <CardItem :song="song"  /> <!-- @click="goToCarUrl(auto.id)" -->
-    </div>
+    <!-- <div class="songs" v-for="song in contentList" :key="song" :loading="loading.contentList"> -->
+      <CardItem :song="song" class="songs" v-for="song in contentList" :key="song" :loading="loading.contentList" /> <!-- @click="goToCarUrl(auto.id)" -->
+    <!-- </div> -->
   </section>
 </template>
 
