@@ -93,9 +93,8 @@ watch(
         @input="onUpload($event)"
       />
       <ProgressBar v-if="loading.newContent" mode="indeterminate" style="height: 6px"></ProgressBar>
-      <!-- <Button v-else-if="validate == false" label="Заполните все поля" disabled/> -->
-      {{ validate }}
-      <Button :disabled="validate !== 'validated'" label="Submit" @click="addContent" />
+      <Button v-else-if="validate == false" label="Заполните все поля" disabled/>
+      <Button v-else label="Submit" @click="addContent" />
     </form>
   </div>
 </template>

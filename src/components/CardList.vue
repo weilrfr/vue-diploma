@@ -4,6 +4,9 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useContent } from '@/composables/useContent';
 
+import VirtualScroller from 'primevue/virtualscroller';
+
+
 const router = useRouter()
 
 const { contentList, getAllContent, loading } = useContent()
@@ -19,9 +22,7 @@ onMounted(async () => {
 
 <template>
   <section class="songs-list">
-    <!-- <div class="songs" v-for="song in contentList" :key="song" :loading="loading.contentList"> -->
-      <CardItem :song="song" class="songs" v-for="song in contentList" :key="song" :loading="loading.contentList" /> <!-- @click="goToCarUrl(auto.id)" -->
-    <!-- </div> -->
+    <CardItem :song="song" class="songs" v-for="song in contentList" :key="song" :loading="loading.contentList" /> <!-- @click="goToCarUrl(auto.id)" -->
   </section>
 </template>
 
@@ -29,13 +30,9 @@ onMounted(async () => {
 .songs-list {
   display: flex;
   width: 100%;
-  padding: 0px 20px;
   flex-wrap: wrap;
+  padding: 0px 20px;
   margin: 20px 0px 20px 0px;
   justify-content: space-evenly;
-}
-
-.cars-list .songs {
-  flex-basis: 20%;
 }
 </style>

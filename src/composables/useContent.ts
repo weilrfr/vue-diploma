@@ -16,6 +16,7 @@ export const useContent = () => {
     genre: '',
     image: '',
     song: '',
+    play: false, 
   })
 
   const loading = ref({

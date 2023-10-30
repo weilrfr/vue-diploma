@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import  PlayButton  from './PlayButton.vue';
 
 defineProps({
   song: {
@@ -14,6 +15,7 @@ defineProps({
   <div class="card">
     <div class="img">
       <img :src="song.image" />
+      <PlayButton :audio="song"/>
     </div>
     <div class="title">
       <p>{{ song.songName }}</p>
@@ -25,12 +27,15 @@ defineProps({
 .img img {
   width: 100%;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .card {
   display: flex;
   flex-wrap: wrap;
-  width: 30%;
+  width: 152px;
+  margin: 15px 0px;
+  position: relative;
 }
 
 .card div {
