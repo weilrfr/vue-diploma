@@ -1,24 +1,24 @@
 import { collection, getDocs, addDoc, deleteDoc, doc, type DocumentData } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { getStorage } from 'firebase/storage'
-import * as firebase from 'firebase/storage';
+import * as firebase from 'firebase/storage'
 import { ref } from 'vue'
 import { useUser } from './useUser'
 import { createId } from '@/services/methods'
 
-export const useContent = () => {
-  const content = ref()
-  const contentList = ref([] as DocumentData)
-  const newContent = ref({
-    id: createId(),
-    author: '',
-    songName: '',
-    genre: '',
-    image: '',
-    song: '',
-    play: false, 
-  })
+const content = ref()
+const contentList = ref([] as DocumentData)
+const newContent = ref({
+  id: createId(),
+  author: '',
+  songName: '',
+  genre: '',
+  image: '',
+  song: '',
+  play: false
+})
 
+export const useContent = () => {
   const loading = ref({
     content: false,
     contentList: false,
@@ -42,13 +42,14 @@ export const useContent = () => {
     loading.value.newContent = true
     const storage = getStorage()
     const storageRef = firebase.ref(storage, `images/${file.name}`)
-    await firebase.uploadBytes(storageRef, file)
-      .then(() => {
-        console.log('Image uploaded successfully')
+    await firebase.uploadBytes(storageRef, file).then(() => {
+      console.log('Image uploaded successfully')
 
-        firebase.getDownloadURL(storageRef).then((url) => {
+      firebase
+        .getDownloadURL(storageRef)
+        .then((url) => {
           console.log('URL uploaded successfully')
-          newContent.value.image = url;
+          newContent.value.image = url
         })
         .catch((error) => {
           console.log('Error: ', error)
@@ -61,13 +62,14 @@ export const useContent = () => {
     loading.value.newContent = true
     const storage = getStorage()
     const storageRef = firebase.ref(storage, `songs/${file.name}`)
-    await firebase.uploadBytes(storageRef, file)
-      .then(() => {
-        console.log('Song uploaded successfully')
+    await firebase.uploadBytes(storageRef, file).then(() => {
+      console.log('Song uploaded successfully')
 
-        firebase.getDownloadURL(storageRef).then((url) => {
+      firebase
+        .getDownloadURL(storageRef)
+        .then((url) => {
           console.log('URL uploaded successfully')
-          newContent.value.song = url;
+          newContent.value.song = url
         })
         .catch((error) => {
           console.log('Error: ', error)
@@ -81,10 +83,10 @@ export const useContent = () => {
     if (e.target.accept == '.jpg, .png') {
       await uploadImage(file)
     } else {
-      await uploadSong(file);
+      await uploadSong(file)
     }
   }
-  
+
   async function addContent() {
     const { user } = useUser()
     loading.value.newContent = true
@@ -133,6 +135,6 @@ export const useContent = () => {
     addContent,
     getContentById,
     onUpload,
-    uploadSong,
+    uploadSong
   }
 }

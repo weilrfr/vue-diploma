@@ -8,7 +8,7 @@ onMounted(() => {
   getUserFromLocalStorage()
 })
 
-const { user, getUserFromLocalStorage } = useUser()
+const { getUserFromLocalStorage } = useUser()
 </script>
 
 <template>
