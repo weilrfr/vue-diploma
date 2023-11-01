@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'; 
+import PButton from 'primevue/button'
 
 const props = defineProps({
   audio: {
@@ -8,57 +9,45 @@ const props = defineProps({
   }
 })
 
-function playAudio(id: number) {
-  const audioContoller = props.audio.value.find((audio: any) => audio.id === id)
-  if (audioContoller) {
-    audioContoller.play = true
-    const audioElement = document.getElementById(audioContoller.songName) as HTMLAudioElement
+
+
+function playAudio() {
+  const audioId = props.audio.id
+  const audioContent = props.audio
+
+  if (audioId) {
+    audioContent.play = true
+    const audioElement = document.getElementById(audioId) as HTMLAudioElement
     audioElement.play()
     console.log('играет')
   }
-  audioContoller.value.forEach((audio: any) => {
-    if (audio.id !== id) {
-      audio.play = false
-      const audioElement = document.getElementById(audio.songName) as HTMLAudioElement
-      audioElement.pause()
-      console.log('на паузеплей')
-    }
-  })
 }
 
-function playStop(id: number) {
-  const audioContoller = props.audio.value.find((audio: any) => audio.id === id)
-  if (audioContoller) {
-    audioContoller.play = false
-    const audioElement = document.getElementById(audioContoller.songName) as HTMLAudioElement
+function playStop() {
+  const audioId = props.audio.id
+  const audioContent = props.audio
+
+  if (audioId) {
+    audioContent.play = false
+    const audioElement = document.getElementById(audioId) as HTMLAudioElement
     audioElement.pause()
     console.log('Audio на паузе')
   }
-  audioContoller.value.forEach((audio: any) => {
-    if (audio.id !== id) {
-      audio.play = false
-      const audioElement = document.getElementById(audio.songName) as HTMLAudioElement
-      audioElement.pause()
-      console.log('на паузе')
-    }
-  })
 }
 </script>
 
 <template>
-  <div v-if="audio.play == false" class="play-button" @click="playAudio(audio.id)">
-    <audio controls class="audio">
-      <source :src="audio.song">
+  <div v-if="!props.audio.play" class="play-button" >
+    <audio :id="props.audio.id">
+      <source :src="props.audio.song" type="audio/mp3">
     </audio>
-    <div>
-      <i class="pi pi-play"></i>
-    </div>
+    <p-button icon="pi pi-play" class="p-button"  @click.stop="playAudio" />
   </div>
-  <div v-else class="stop-button" @click="playStop(audio.id)">
-    <audio controls class="audio">
-      <source :src="audio.song">
+  <div v-else class="stop-button">
+    <audio :id="props.audio.id">
+      <source :src="props.audio.song" type="audio/mp3">
     </audio>
-    <i class="pi pi-pause"></i>
+    <p-button icon="pi pi-pause" class="p-button" @click.stop="playStop" />
   </div>
 </template>
 

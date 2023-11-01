@@ -77,6 +77,7 @@ if (hours >= 6 && hours < 12) {
   position: absolute;
   top: 7%;
   right: 35px;
+  z-index: 5999;
 }
 .listbox > * {
   padding: 10px;
