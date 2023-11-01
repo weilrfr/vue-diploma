@@ -43,7 +43,7 @@ function playStop() {
     </audio>
     <p-button icon="pi pi-play" class="p-button"  @click.stop="playAudio" />
   </div>
-  <div v-else class="stop-button">
+  <div v-else class="play-button">
     <audio :id="props.audio.id">
       <source :src="props.audio.song" type="audio/mp3">
     </audio>
