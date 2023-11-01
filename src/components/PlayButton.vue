@@ -19,7 +19,7 @@ function playAudio() {
     audioContent.play = true
     const audioElement = document.getElementById(audioId) as HTMLAudioElement
     audioElement.play()
-    console.log('играет')
+    console.log(props.audio.id + ' играет')
   }
 }
 
@@ -31,21 +31,21 @@ function playStop() {
     audioContent.play = false
     const audioElement = document.getElementById(audioId) as HTMLAudioElement
     audioElement.pause()
-    console.log('Audio на паузе')
+    console.log(props.audio.id + ' на паузе')
   }
 }
 </script>
 
 <template>
   <div v-if="!props.audio.play" class="play-button" >
-    <audio :id="props.audio.id">
+    <audio controls :id="props.audio.id">
       <source :src="props.audio.song" type="audio/mp3">
     </audio>
     <p-button icon="pi pi-play" class="p-button"  @click.stop="playAudio" />
   </div>
   <div v-else class="play-button">
-    <audio :id="props.audio.id">
-      <source :src="props.audio.song" type="audio/mp3">
+    <audio controls :id="props.audio.id">
+      <source  :src="props.audio.song" type="audio/mp3">
     </audio>
     <p-button icon="pi pi-pause" class="p-button" @click.stop="playStop" />
   </div>
