@@ -48,6 +48,7 @@ const { user, googleLogout, googleRegister } = useUser()
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 80%;
 }
 .profile {
   display: flex;
@@ -75,6 +76,11 @@ const { user, googleLogout, googleRegister } = useUser()
   padding: 15px;
   justify-content: center;
   border-radius: 20px;
+}
+
+.registerform Button {
+  border-radius: 20px;
+  padding: 15px;
 }
 
 </style>

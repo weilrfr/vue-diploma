@@ -17,10 +17,9 @@ function playAudio() {
   const audioId = props.audio.id
   const audioContent = props.audio
   const audioElement = document.getElementById(audioId) as HTMLAudioElement
-
+  
   if (audioId) {
     audioContent.play = true
-    const audioElement = document.getElementById(audioId) as HTMLAudioElement
     audioElement.play()
     console.log(props.audio.id + ' играет')
   }
@@ -39,7 +38,7 @@ function playStop() {
   const audioId = props.audio.id
   const audioContent = props.audio
   const audioElement = document.getElementById(audioId) as HTMLAudioElement
-
+  
   if (audioId) {
     audioContent.play = false
     audioElement.pause()
@@ -63,8 +62,8 @@ function playStop() {
     <audio :id="props.audio.id">
       <source  :src="props.audio.song" type="audio/mp3">
     </audio>
-    <p-button v-if="!props.audio.play" icon="pi pi-play" class="p-button"  @click.stop="playAudio" />
-    <p-button  v-else icon="pi pi-pause" class="p-button" @click.stop="playStop" />
+    <p-button v-if="!props.audio.play" icon="pi pi-play" class="p-button btn"  @click.stop="playAudio" />
+    <p-button  v-else icon="pi pi-pause" class="p-button btn" @click.stop="playStop" />
   </div>
 </template>
 
@@ -72,7 +71,6 @@ function playStop() {
 .play-button {
   width: 40px;
   height: 40px;
-  background-color: green;
   position: absolute;
   bottom: 30px;
   right: 10px;
@@ -81,6 +79,13 @@ function playStop() {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.btn {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
 }
 
 .audio {
