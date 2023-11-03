@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import { useUser } from './useUser'
 import { createId } from '@/services/methods'
 
+
 const content = ref()
 const contentList = ref([] as DocumentData)
 const newContent = ref({
@@ -17,7 +18,6 @@ const newContent = ref({
   song: '',
   play: false
 })
-
 export const useContent = () => {
   const loading = ref({
     content: false,

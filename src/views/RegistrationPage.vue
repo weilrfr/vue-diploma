@@ -48,7 +48,7 @@ const { user, googleLogout, googleRegister } = useUser()
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 80%;
+  margin-top: 35%;
 }
 .profile {
   display: flex;
