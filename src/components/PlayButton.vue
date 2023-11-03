@@ -16,7 +16,7 @@ const {contentList} = useContent()
 function playAudio() {
   const audioId = props.audio.id
   const audioContent = props.audio
-  const audioElement = document.getElementById(audioId) as HTMLAudioElement
+  // const audioElement = document.getElementById(audioId) as HTMLAudioElement
 
   if (audioId) {
     audioContent.play = true
@@ -38,9 +38,9 @@ function playAudio() {
 function playStop() {
   const audioId = props.audio.id
   const audioContent = props.audio
-  const audioElement = document.getElementById(audioId) as HTMLAudioElement
-
+  
   if (audioId) {
+    const audioElement = document.getElementById(audioId) as HTMLAudioElement
     audioContent.play = false
     audioElement.pause()
     console.log(props.audio.id + ' на паузе')
@@ -50,6 +50,7 @@ function playStop() {
 
   contentList.value.forEach((video: any) => {
     if (video.id !== audioId) {
+      const audioElement = document.getElementById(audioId) as HTMLAudioElement
       video.play = false
       console.log(audioElement)
       audioElement.pause()
