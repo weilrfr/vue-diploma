@@ -4,8 +4,6 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useContent } from '@/composables/useContent';
 
-import VirtualScroller from 'primevue/virtualscroller';
-
 
 const router = useRouter()
 
